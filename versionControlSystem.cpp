@@ -1,3 +1,19 @@
+// Pointers
+
+// File - named entity having string contents
+// Filesystem - collection of files
+// Users can create, delete and edit files. 
+// Only two types of edit operations are allowed: Append to the end of file, and delete last n characters from file
+// Version Control System - A system to track the changes made to the file system 
+// Commit - A checkpoint in the history of the file system.
+// Diff - It represents the changes since the last version of file.
+// Using a commit we can get the contents of the file system at the point in time of that commit
+// Each commit SHOULD NOT store separate full copies of each file
+// A commit should only store the changes made to the file after the previous commit
+// We can have as many commits as user wants to save checkpoints.
+// We should be able to retrieve the state of a file or entire filesystem as of a given point in time using commit ID
+
+
 #include<iostream>
 #include<algorithm>
 #include<string.h>
@@ -9,15 +25,27 @@ using namespace std;
 
 class File{
     public:
+        string name;
+        string contents;
+        int ID;
+        File(string name, string contents, int ID){
+            this->name = name;
+            this->contents = contents;
+            this->ID = ID;
+        }
 
-    // Displays the filename and its contents
-    void display(){
-        
-    }
+        // Displays the filename and its contents
+        void display(){
+            cout<<"File name: "<<name<<endl;
+            cout<<"Contents: "<<contents<<endl;
+        }
 };
 
+// array of files
+vector<File> files;
+
 // Class to represent difference between current and previous version of a file
-class Diff{
+class Diff: public File{
     
 };
 
@@ -32,27 +60,42 @@ class FileSystem{
         <Repeat for all files>
     */
    void displayContents(){
-        
+        for(int i=0; i<files.size(); i++){
+            files[i].display();
+        }
    }
 
    // Add new file to the filesystem
     void createNewFile(string fileName, string content){
-        
+        File newFile(fileName, content, files.size());
+        files.push_back(newFile);
     }
 
     // Append Content to an existing file
     void appendToFile(string fileName, string contentToAppend){
-        
+        for(int i=0; i<files.size(); i++){
+            if(files[i].name == fileName){
+                files[i].contents += contentToAppend;
+            }
+        }
     }
 
     // Delete a file from the filesystem
     void deleteFile(string fileName){
-        
+        for(int i=0; i<files.size(); i++){
+            if(files[i].name == fileName){
+                files.erase(files.begin()+i);
+            }
+        }
     }
 
     // Delete last n characters from a file
     void trimFile(string fileName, int n){
-        
+        for(int i=0; i<files.size(); i++){
+            if(files[i].name == fileName){
+                files[i].contents = files[i].contents.substr(0, files[i].contents.size()-n);
+            }
+        }
     }
 };
 
