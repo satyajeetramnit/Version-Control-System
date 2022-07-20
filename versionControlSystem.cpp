@@ -27,11 +27,11 @@ class File{
     public:
         string name;
         string contents;
-        int ID;
-        File(string name, string contents, int ID){
+        // int ID;
+        File(string name, string contents){
             this->name = name;
             this->contents = contents;
-            this->ID = ID;
+            // this->ID = ID;
         }
 
         // Displays the filename and its contents
@@ -45,7 +45,7 @@ class File{
 vector<File> files;
 
 // Class to represent difference between current and previous version of a file
-class Diff: public File{
+class Diff{
     
 };
 
@@ -67,7 +67,7 @@ class FileSystem{
 
    // Add new file to the filesystem
     void createNewFile(string fileName, string content){
-        File newFile(fileName, content, files.size());
+        File newFile(fileName, content);
         files.push_back(newFile);
     }
 
@@ -103,6 +103,8 @@ class FileSystem{
 class Commit{
     public:
     string ID;
+    string message;
+    vector<Diff> diffs;
 };
 
 class VersionControlDriver {
@@ -111,13 +113,15 @@ class VersionControlDriver {
     * Declare variables for:
     * Commit list
   */
+    vector<Commit> commitList;
+    int commitID;
 
   public:
 
   // Get content of file at a paticular commit
   string getFileContentAtCommit(string fileName, string commitID)
   {
-
+    
   }
 
 
